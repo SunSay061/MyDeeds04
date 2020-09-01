@@ -1,0 +1,70 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.arhiser.todolist.screens.main.MainActivity">
+
+    <item
+        android:id="@+id/filter"
+        android:title="Отсортировать"
+        app:showAsAction="never">
+
+        <menu>
+
+            <item
+                android:id="@+id/firstnew"
+                android:title="Новые"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstold"
+                android:title="Старые"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstendtime"
+                android:title="Срочные"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstfood"
+                android:title="Еда"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstcloth"
+                android:title="Одежда"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firsthug"
+                android:title="Гигиена"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstchem"
+                android:title="Бытовая химия"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstapplies"
+                android:title="Бытовая техника"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/firstother"
+                android:title="Другое"
+                app:showAsAction="never"/>
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/deleteselect"
+        android:title="Удалить выполненные"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/deleteall"
+        android:title="Очистить список"
+        app:showAsAction="never"/>
+</menu>

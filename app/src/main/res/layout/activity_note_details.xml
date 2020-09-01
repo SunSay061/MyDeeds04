@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/details"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_note_style_neutral">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <Spinner
+        android:layout_below="@id/toolbar"
+        android:id="@+id/itemCreateSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <!--<CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/endDataCheck"
+        android:layout_below="@+id/toolbar"
+        android:layoutDirection="rtl"
+        android:gravity="right||center"
+        android:text="Добавить дату завершения"/>-->
+
+    <EditText
+        android:id="@+id/text"
+        android:textColorHint="@color/txtBrightColor"
+        android:textColor="@color/txtDarkColor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/itemCreateSpinner"
+        android:hint="Текст..." />
+
+    <Button
+        android:id="@+id/itemCreateBtnReady"
+        android:layout_below="@+id/text"
+        android:layout_toLeftOf="@id/itemCreateBtnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Завершить"
+        android:textColor="@color/txtDarkColor"/>
+
+    <Button
+        android:id="@+id/itemCreateBtnAdd"
+        android:layout_below="@+id/text"
+        android:layout_alignEnd="@+id/itemCreateSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добавить"
+        android:textColor="@color/txtDarkColor"
+        android:layout_alignRight="@+id/itemCreateSpinner" />
+
+</RelativeLayout>
