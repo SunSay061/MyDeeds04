@@ -69,5 +69,6 @@ public class MainViewModel extends ViewModel {
             }
         });
         mutableLiveData.setValue(allNote);
+
     }
 }
