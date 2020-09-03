@@ -3,14 +3,19 @@ package com.arhiser.todolist.screens.main;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Paint;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
@@ -21,6 +26,8 @@ import com.arhiser.todolist.model.Note;
 import com.arhiser.todolist.screens.details.NoteDetailsActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -30,24 +37,38 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         void DeleteAll(Note note);
     }*/
 
-    public SortedList<Note> sortedList;
+    //public SortedList<Note> sortedList;
+    public List<Note> sortedList;
+    //public RadioButton testCheck;
     //private DeleteAll deleteAll;
 
     public Adapter() {
 
-        sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
+        //sortedList = new ArrayList<Note>();
+        //sortedList = new ArrayList<Note>(Note.class, new ArrayList<Note>());
+        sortedList = new ArrayList<>();
+        /*sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
 
-
-            @Override
+           @Override
             public int compare(Note o1, Note o2) {
+
                 if (!o2.done && o1.done) {
-                    return 1;
-                }
-                if (o2.done && !o1.done) {
-                    return -1;
-                }
+                   return 1;
+               }
+               if (o2.done && !o1.done) {
+                   return -1;
+               }
+
+               else if (!o2.group.equals("Еда") && o1.group.equals("Еда")) {
+                   return -1;
+               }
+               else if (o2.group.equals("Еда") && !o1.group.equals("Еда")) {
+                   return 1;
+               }
+
                 return (int) (o2.timestamp - o1.timestamp);
             }
+
 
             @Override
             public void onChanged(int position, int count) {
@@ -78,7 +99,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             public void onMoved(int fromPosition, int toPosition) {
                 notifyItemMoved(fromPosition, toPosition);
             }
-        });
+        });*/
     }
 
 
@@ -100,8 +121,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
     }
 
     public void setItems(List<Note> notes) {
-        sortedList.replaceAll(notes);
+        //sortedList.replaceAll(notes);
+        sortedList.removeAll(notes);
+        sortedList.addAll(notes);
+        notifyDataSetChanged();
     }
+
 
     public void submitList(List<Note> notes) {
 
@@ -132,7 +157,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             leftTag = itemView.findViewById(R.id.itemTemplateLeftTag);
             timestampStart = itemView.findViewById(R.id.noteStartDate);
             timestampEnd = itemView.findViewById(R.id.noteEndDate);
-            //delete = itemView.findViewById(R.id.delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -140,13 +164,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
                     NoteDetailsActivity.start((Activity) itemView.getContext(), note);
                 }
             });
-
-            /*delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    App.getInstance().getNoteDao().delete(note);
-                }
-            });*/
 
             completed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

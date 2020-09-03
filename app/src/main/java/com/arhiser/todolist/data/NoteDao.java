@@ -18,7 +18,7 @@ import java.util.List;
 public interface NoteDao {
 
     @Query("SELECT * FROM Note")
-    byte[] getAll();
+    List<Note> getAll();
 
     @Query("SELECT * FROM Note")
     LiveData<List<Note>> getAllLiveData();
@@ -34,14 +34,6 @@ public interface NoteDao {
 
     @Query("DELETE FROM Note WHERE done = 1")
     void deleteDone();
-
-
-
-    @Query("SELECT * FROM Note WHERE text = :text")
-    LiveData<List<Note>> findByGroup(String text);
-
-
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Note note);
