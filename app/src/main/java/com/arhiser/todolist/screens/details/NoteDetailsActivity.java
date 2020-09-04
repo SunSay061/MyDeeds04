@@ -27,6 +27,7 @@ import com.arhiser.todolist.App;
 import com.arhiser.todolist.R;
 import com.arhiser.todolist.data.AppDatabase;
 import com.arhiser.todolist.model.Note;
+import com.arhiser.todolist.screens.main.Adapter;
 
 public class NoteDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,6 +44,8 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
     private Button btnRdy;
 
     private Spinner spinner;
+
+    Adapter adapter = new Adapter();
 
     private String[] data = {"Еда", "Одежда", "Гигиена", "Бытовая химия", "Бытовая техника", "Другое"};
 
@@ -124,7 +127,6 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.itemCreateBtnAdd:
                 if (editText.getText().length() > 0) {
@@ -139,6 +141,8 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
                         App.getInstance().getNoteDao().insert(note);
                     }
                     editText.setText("");
+                    adapter.notifyDataSetChanged();
+
                 }
                 break;
             case R.id.itemCreateBtnReady:

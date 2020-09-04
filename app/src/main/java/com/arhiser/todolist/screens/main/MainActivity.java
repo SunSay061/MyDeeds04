@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
 
     private RecyclerView recyclerView;
     private MenuInflater inflater;
+    Note note;
     public RadioButton testCheck;
+    //String sortType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +65,11 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         });
 
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mainViewModel.getMutableLiveData().observe(this, new Observer<List<Note>>() {
+        mainViewModel.getLiveData().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
                 adapter.setItems((ArrayList<Note>) notes);
+                //adapter.notifyData();
                 //recyclerView.invalidate();
             }
         });
@@ -79,48 +82,64 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Adapter adapter = new Adapter();
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
 
         switch (item.getItemId()) {
 
             case R.id.deleteall:
-                mainViewModel.sort("Очистить список");
+                App.getInstance().getNoteDao().deleteAll();
                 return true;
             case R.id.deleteselect:
-                mainViewModel.sort("Удалить выполненные");
+                App.getInstance().getNoteDao().deleteDone();
+                //adapter.notifyDataSetChanged();
                 return true;
             case R.id.firstfood:
-                mainViewModel.sort("Еда");
+                mainViewModel.sortType = "Еда";
+                adapter.setItems(mainViewModel.sort(adapter.sortedList));
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstchem:
-                mainViewModel.sort("Бытовая химия");
+                mainViewModel.sortType = "Бытовая химия";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstcloth:
-                mainViewModel.sort("Одежда");
+                mainViewModel.sortType = "Одежда";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firsthug:
-                mainViewModel.sort("Гигиена");
+                mainViewModel.sortType = "Гигиена";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstapplies:
-                mainViewModel.sort("Бытовая техника");
+                mainViewModel.sortType = "Бытовая техника";
+               // mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstother:
-                mainViewModel.sort("Другое");
+                mainViewModel.sortType = "Другое";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstnew:
-                mainViewModel.sort("Новые");
+                mainViewModel.sortType = "Новые";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstold:
-                mainViewModel.sort("Старые");
+                mainViewModel.sortType = "Старые";
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
             case R.id.firstendtime:
-                mainViewModel.sort("Срочные");
+                mainViewModel.sortType = "Срочные";
+                //adapter.setItems(mainViewModel.sort(adapter.sortedList));
+                //mainViewModel.sort(adapter.sortedList);
                 return true;
 
-        }
 
+        }
+        //adapter.setItems(mainViewModel.sort(adapter.sortedList));
         return super.onOptionsItemSelected(item);
     }
 }

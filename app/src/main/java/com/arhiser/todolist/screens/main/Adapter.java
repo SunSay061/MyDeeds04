@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
+import androidx.room.Database;
 
 import com.arhiser.todolist.App;
 import com.arhiser.todolist.R;
@@ -33,73 +34,12 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
-    /*public interface  DeleteAll {
-        void DeleteAll(Note note);
-    }*/
-
-    //public SortedList<Note> sortedList;
     public List<Note> sortedList;
-    //public RadioButton testCheck;
-    //private DeleteAll deleteAll;
+    private boolean isResizible = false;
 
     public Adapter() {
 
-        //sortedList = new ArrayList<Note>();
-        //sortedList = new ArrayList<Note>(Note.class, new ArrayList<Note>());
         sortedList = new ArrayList<>();
-        /*sortedList = new SortedList<>(Note.class, new SortedList.Callback<Note>() {
-
-           @Override
-            public int compare(Note o1, Note o2) {
-
-                if (!o2.done && o1.done) {
-                   return 1;
-               }
-               if (o2.done && !o1.done) {
-                   return -1;
-               }
-
-               else if (!o2.group.equals("Еда") && o1.group.equals("Еда")) {
-                   return -1;
-               }
-               else if (o2.group.equals("Еда") && !o1.group.equals("Еда")) {
-                   return 1;
-               }
-
-                return (int) (o2.timestamp - o1.timestamp);
-            }
-
-
-            @Override
-            public void onChanged(int position, int count) {
-                notifyItemRangeChanged(position, count);
-            }
-
-            @Override
-            public boolean areContentsTheSame(Note oldItem, Note newItem) {
-                return oldItem.equals(newItem);
-            }
-
-            @Override
-            public boolean areItemsTheSame(Note item1, Note item2) {
-                return item1.uid == item2.uid;
-            }
-
-            @Override
-            public void onInserted(int position, int count) {
-                notifyItemRangeInserted(position, count);
-            }
-
-            @Override
-            public void onRemoved(int position, int count) {
-                notifyItemRangeRemoved(position, count);
-            }
-
-            @Override
-            public void onMoved(int fromPosition, int toPosition) {
-                notifyItemMoved(fromPosition, toPosition);
-            }
-        });*/
     }
 
 
@@ -121,10 +61,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
     }
 
     public void setItems(List<Note> notes) {
-        //sortedList.replaceAll(notes);
-        sortedList.removeAll(notes);
+        sortedList.clear();
+        //sortedList.removeAll(notes);
         sortedList.addAll(notes);
+        //notifyItemRangeChanged(0, notes.size());
         notifyDataSetChanged();
+
     }
 
 
