@@ -12,9 +12,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
+import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
@@ -36,6 +37,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
     public List<Note> sortedList;
     private boolean isResizible = false;
+
 
     public Adapter() {
 
@@ -62,13 +64,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
 
     public void setItems(List<Note> notes) {
         sortedList.clear();
-        //sortedList.removeAll(notes);
         sortedList.addAll(notes);
-        //notifyItemRangeChanged(0, notes.size());
         notifyDataSetChanged();
-
     }
-
 
     public void submitList(List<Note> notes) {
 
@@ -83,7 +81,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         View leftTag;
         TextView timestampStart;
         TextView timestampEnd;
-        //View delete;
+        //Adapter adapter = new Adapter();
+        //MainViewModel mainViewModel = new MainViewModel();
+        //MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        //MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
 
         Note note;
 
@@ -115,6 +117,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
                         App.getInstance().getNoteDao().update(note);
                     }
                     updateStrokeOut();
+                    //mainViewModel.sort(App.getInstance().getNoteDao().getAll());
+                    //adapter.notifyDataSetChanged();
+                    //adapter.update();
                 }
             });
 
@@ -136,11 +141,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         }
 
         private void updateStrokeOut() {
+
             if (note.done) {
                 noteText.setPaintFlags(noteText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 noteText.setPaintFlags(noteText.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
             }
+
+
         }
 
         @SuppressLint("ResourceAsColor")

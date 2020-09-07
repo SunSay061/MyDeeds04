@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+import androidx.lifecycle.ViewModelProvider;
 import com.arhiser.todolist.App;
 import com.arhiser.todolist.data.NoteDao;
 import com.arhiser.todolist.model.Note;
@@ -29,50 +29,6 @@ public class MainViewModel extends ViewModel {
 
         return noteLiveData;
     }
-
-    /*public MutableLiveData<List<Note>> getMutableLiveData() {
-        if (!isResizible) {
-            sort("1");
-        }
-        return mutableLiveData;
-    }/*
-
-    /*public void sort(final String group) {
-
-        allNote = App.getInstance().getNoteDao().getAll();
-
-        Collections.sort(allNote, new Comparator<Note>() {
-
-            @Override
-            public int compare(Note note, Note t1) {
-
-                if (!t1.done && note.done) {
-                    return 1;
-                }
-                if (t1.done && !note.done) {
-                        return -1;
-                }
-                else if (!t1.group.equals(group) && note.group.equals(group)) {
-                    return -1;
-                }
-                else if (t1.group.equals(group) && !note.group.equals(group)) {
-                    return 1;
-                }
-                else if (group.equals("Новые")) {
-                    return (int) (t1.timestamp - note.timestamp);
-                }
-                else if (group.equals("Старые")) {
-                    return (int) (note.timestamp - t1.timestamp);
-                }
-                else if (group.equals("Срочные")) {
-                    return (int) (t1.timestampend - note.timestampend);
-                }
-                return (int) (t1.timestamp - note.timestamp);
-            }
-        });
-        mutableLiveData.setValue(allNote);
-
-    }*/
 
     public List<Note> sort(List<Note> notesList) {
 

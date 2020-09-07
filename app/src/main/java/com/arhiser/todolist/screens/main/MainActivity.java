@@ -8,7 +8,7 @@ import com.arhiser.todolist.R;
 import com.arhiser.todolist.model.Note;
 import com.arhiser.todolist.screens.details.NoteDetailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -32,13 +32,11 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MenuInflater inflater;
-    Note note;
-    public RadioButton testCheck;
-    //String sortType = "";
+    Adapter adapter = new Adapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        final Adapter adapter = new Adapter();
+        //final Adapter adapter = new Adapter();
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -69,8 +67,6 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
             @Override
             public void onChanged(List<Note> notes) {
                 adapter.setItems((ArrayList<Note>) notes);
-                //adapter.notifyData();
-                //recyclerView.invalidate();
             }
         });
     }
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Adapter adapter = new Adapter();
+
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
 
@@ -96,50 +92,44 @@ public class MainActivity extends AppCompatActivity /*implements View.OnClickLis
                 return true;
             case R.id.deleteselect:
                 App.getInstance().getNoteDao().deleteDone();
-                //adapter.notifyDataSetChanged();
                 return true;
             case R.id.firstfood:
                 mainViewModel.sortType = "Еда";
-                adapter.setItems(mainViewModel.sort(adapter.sortedList));
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstchem:
                 mainViewModel.sortType = "Бытовая химия";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstcloth:
                 mainViewModel.sortType = "Одежда";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firsthug:
                 mainViewModel.sortType = "Гигиена";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstapplies:
                 mainViewModel.sortType = "Бытовая техника";
-               // mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstother:
                 mainViewModel.sortType = "Другое";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstnew:
                 mainViewModel.sortType = "Новые";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstold:
                 mainViewModel.sortType = "Старые";
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
             case R.id.firstendtime:
                 mainViewModel.sortType = "Срочные";
-                //adapter.setItems(mainViewModel.sort(adapter.sortedList));
-                //mainViewModel.sort(adapter.sortedList);
+                adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
                 return true;
-
-
         }
-        //adapter.setItems(mainViewModel.sort(adapter.sortedList));
         return super.onOptionsItemSelected(item);
     }
 }
