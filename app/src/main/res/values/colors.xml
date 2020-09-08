@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#DCD7C6</color>
-    <color name="colorPrimaryDark">#9E9A8E</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#82CEDC</color>
+    <color name="colorPrimaryDark">#5D9BA6</color>
+    <color name="colorAccent">#5C5C5C</color>
     <color name="txtDarkColor">#141414</color>
     <color name="txtBrightColor">#ACACAC</color>
-    <color name="btnColor">#DCD7C6</color>
+    <color name="btnColor">#82CEDC</color>
 
     <color name="otherNoteColor">#B8B8B8</color>
-    <color name="appleNoteColor">#D5B6B6</color>
-    <color name="chemNoteColor">#D4D5B6</color>
-    <color name="clothNoteColor">#D5C4B6</color>
-    <color name="foodNoteColor">#B6D5BF</color>
-    <color name="hugNoteColor">#B6BBD5</color>
+    <color name="appleNoteColor">#D6C7C7</color>
+    <color name="chemNoteColor">#D6D6C5</color>
+    <color name="clothNoteColor">#D6CDC6</color>
+    <color name="foodNoteColor">#C8D8CD</color>
+    <color name="hugNoteColor">#C6C8D6</color>
+    <color name="leftTagColor">#807A7A7A</color>
 
 </resources>

@@ -19,54 +19,35 @@ import java.util.List;
 import java.util.Observer;
 
 public class MainViewModel extends ViewModel  {
+
     public LiveData<List<Note>> noteLiveData = App.getInstance().getNoteDao().getAllLiveData();
-    //public List<Note> allNote = App.getInstance().getNoteDao().getAll();
-    //public MutableLiveData<List<Note>> mutableLiveData = new MutableLiveData<>();
-    //boolean isResizible = false;
     String sortType = "";
-
     public LiveData<List<Note>> getLiveData() {
-
         return noteLiveData;
     }
-
     public List<Note> sort(List<Note> notesList) {
-
-        //notesList = App.getInstance().getNoteDao().getAll();
-
         Collections.sort(notesList, new Comparator<Note>() {
             @Override
             public int compare(Note note, Note t1) {
-
                 if (!t1.done && note.done) {
-                    return 1;
-                }
+                    return 1; }
                 else if (t1.done && !note.done) {
-                    return -1;
-                }
+                    return -1; }
                 else if (!t1.group.equals(sortType) && note.group.equals(sortType)) {
-                    return -1;
-                }
+                    return -1; }
                 else if (t1.group.equals(sortType) && !note.group.equals(sortType)) {
-                    return 1;
-                }
+                    return 1; }
                 else if (sortType.equals("Новые")) {
-                    return (int) (t1.timestamp - note.timestamp);
-                }
+                    return (int) (t1.timestamp - note.timestamp); }
                 else if (sortType.equals("Старые")) {
-                    return (int) (note.timestamp - t1.timestamp);
-                }
+                    return (int) (note.timestamp - t1.timestamp); }
                 else if (sortType.equals("Срочные")) {
                     if(note.timestampend == 0){
-                        return 1;
-                    }
+                        return 1; }
                     else if(t1.timestampend == 0){
-                        return -1;
-                    }
-                    return (int) (note.timestampend - t1.timestampend);
-                }
-                //return (int) (t1.timestamp - note.timestamp);
-                return 0;
+                        return -1; }
+                    return (int) (note.timestampend - t1.timestampend); }
+                return (int) (t1.timestamp - note.timestamp);
             }
         });
         return notesList;

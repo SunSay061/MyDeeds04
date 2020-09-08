@@ -11,7 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="#FFFFFF"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Spinner
@@ -19,15 +20,6 @@
         android:id="@+id/itemCreateSpinner"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
-
-    <!--<CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/endDataCheck"
-        android:layout_below="@+id/toolbar"
-        android:layoutDirection="rtl"
-        android:gravity="right||center"
-        android:text="Добавить дату завершения"/>-->
 
     <EditText
         android:id="@+id/text"
@@ -61,7 +53,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="#DCDCDC"
         android:layout_below="@+id/text"
         android:id="@+id/itemTimeEndAdd"
         android:textSize="17sp"

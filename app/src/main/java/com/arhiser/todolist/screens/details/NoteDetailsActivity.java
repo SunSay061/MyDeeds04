@@ -47,19 +47,14 @@ import java.util.Date;
 public class NoteDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String EXTRA_NOTE = "NoteDetailsActivity.EXTRA_NOTE";
-    //private static final TAG = "NoteDetailsActivity";
     public Note note;
     private EditText editText;
     private Button btnAdd;
     private Button btnRdy;
     private Spinner spinner;
-    //Adapter adapter = new Adapter();
     private String[] data = {"Еда", "Одежда", "Гигиена", "Бытовая химия", "Бытовая техника", "Другое"};
-
-
     private TextView itemTimeAdd;
     private DatePickerDialog.OnDateSetListener dialogDateListener;
-
     public static void start(Activity caller, Note note) {
         Intent intent = new Intent(caller, NoteDetailsActivity.class);
         if (note != null) {
@@ -71,53 +66,40 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_note_details);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-
         setTitle("Новая задача");
-
         editText = findViewById(R.id.text);
-
         itemTimeAdd = findViewById(R.id.itemTimeEndAdd);
-        //itemTimeAdd.setOnClickListener(this);
-
         btnAdd = findViewById(R.id.itemCreateBtnAdd);
         btnAdd.setOnClickListener(this);
         btnRdy = findViewById(R.id.itemCreateBtnReady);
         btnRdy.setOnClickListener(this);
-
         final ArrayAdapter<String> iSAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         iSAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = findViewById(R.id.itemCreateSpinner);
         spinner.setAdapter(iSAdapter);
         spinner.setPrompt("Title");
         spinner.setSelection(5);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(spinner.getSelectedItem().toString().equals("Еда")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_food);
-                }
-                else if(spinner.getSelectedItem().toString().equals("Одежда")) {
+                } else if(spinner.getSelectedItem().toString().equals("Одежда")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_cloth);
-                }
-                else if(spinner.getSelectedItem().toString().equals("Гигиена")) {
+                } else if(spinner.getSelectedItem().toString().equals("Гигиена")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_hug);
-                }
-                else if(spinner.getSelectedItem().toString().equals("Бытовая химия")) {
+                } else if(spinner.getSelectedItem().toString().equals("Бытовая химия")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_chem);
-                }
-                else if(spinner.getSelectedItem().toString().equals("Бытовая техника")) {
+                } else if(spinner.getSelectedItem().toString().equals("Бытовая техника")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_appl);
-                }
-                else if(spinner.getSelectedItem().toString().equals("Другое")) {
+                } else if(spinner.getSelectedItem().toString().equals("Другое")) {
                     findViewById(R.id.details).setBackgroundResource(R.drawable.gradient_note_style_neutral);
                 }
             }
@@ -165,7 +147,6 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
         };
     }
@@ -179,7 +160,6 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
                     note.text = editText.getText().toString();
                     note.group = spinner.getSelectedItem().toString();
                     note.done = false;
-
                     note.timestamp = System.currentTimeMillis();
 
                     if (getIntent().hasExtra(EXTRA_NOTE)) {
@@ -188,24 +168,11 @@ public class NoteDetailsActivity extends AppCompatActivity implements View.OnCli
                         App.getInstance().getNoteDao().insert(note);
                     }
                     editText.setText("");
-                    //adapter.notifyDataSetChanged();
-
                 }
                 break;
             case R.id.itemCreateBtnReady:
                 finish();
                 break;
-            /*case  R.id.itemTimeEndAdd:
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(NoteDetailsActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, dialogDateListener, year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();*/
         }
     }
-
-
 }

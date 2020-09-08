@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import android.os.Handler;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
@@ -32,11 +33,11 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements Adapter.OnNoteListener {
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MenuInflater inflater;
-    Adapter adapter = new Adapter(this);
+    Adapter adapter = new Adapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +61,15 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
             }
         });
 
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        final MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.getLiveData().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                adapter.setItems((ArrayList<Note>) notes);
+                adapter.setItems(mainViewModel.sort(notes));
+                //adapter.setItems((ArrayList<Note>) notes);
             }
         });
     }
-
-    /*@Override
-    public void callingBack() {
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mainViewModel.sort(App.getInstance().getNoteDao().getAll());
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,18 +130,4 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnNoteLis
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onNoteClick() {
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
-        /*try{
-            MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-            adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-    }
 }
