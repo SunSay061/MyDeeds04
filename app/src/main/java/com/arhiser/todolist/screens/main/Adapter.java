@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Paint;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +35,18 @@ import java.util.Date;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
-
     public List<Note> sortedList;
-    private boolean isResizible = false;
+    private OnNoteListener mOnNoteListener;
 
-
-    public Adapter() {
-
+    public Adapter(OnNoteListener onNoteListener){
         sortedList = new ArrayList<>();
+        this.mOnNoteListener = onNoteListener;
     }
-
 
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoteViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note_list, parent, false));
+        return new NoteViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note_list, parent, false), mOnNoteListener);
     }
 
     @Override
@@ -66,13 +63,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         sortedList.clear();
         sortedList.addAll(notes);
         notifyDataSetChanged();
+
     }
+    public void updateAdapter() {
+
+        notifyDataSetChanged();
+    }
+
 
     public void submitList(List<Note> notes) {
 
     }
 
-    static class NoteViewHolder extends RecyclerView.ViewHolder {
+    static class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView noteText;
         CheckBox completed;
@@ -81,17 +84,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
         View leftTag;
         TextView timestampStart;
         TextView timestampEnd;
-        //Adapter adapter = new Adapter();
-        //MainViewModel mainViewModel = new MainViewModel();
-        //MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        //MainViewModel mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-
         Note note;
-
         boolean silentUpdate;
 
-        public NoteViewHolder(@NonNull final View itemView) {
+        OnNoteListener onNoteListener;
+
+        /*interface Callback{
+            void callingBack();
+        }
+        Callback callback;
+
+        public void registerCallBack(Callback callback){
+            this.callback = callback;
+        }*/
+
+        public NoteViewHolder(@NonNull final View itemView, final OnNoteListener onNoteListener) {
             super(itemView);
 
             noteText = itemView.findViewById(R.id.note_text);
@@ -101,6 +108,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             leftTag = itemView.findViewById(R.id.itemTemplateLeftTag);
             timestampStart = itemView.findViewById(R.id.noteStartDate);
             timestampEnd = itemView.findViewById(R.id.noteEndDate);
+            this.onNoteListener = onNoteListener;
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,13 +125,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
                         App.getInstance().getNoteDao().update(note);
                     }
                     updateStrokeOut();
-                    //mainViewModel.sort(App.getInstance().getNoteDao().getAll());
-                    //adapter.notifyDataSetChanged();
-                    //adapter.update();
+                    onNoteListener.onNoteClick();
                 }
+
             });
 
         }
+
 
         @SuppressLint("ResourceAsColor")
         public void bind(Note note) {
@@ -187,14 +195,35 @@ public class Adapter extends RecyclerView.Adapter<Adapter.NoteViewHolder> {
             timestampStart.setText(df2.format(dates));
 
             try {
-                /*Date datee = new Date(note.timestampend);
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat df3 = new SimpleDateFormat("MMM dd yyyy");
-            timestampStart.setText(df2.format(datee));*/
+                //long currentDate = System.currentTimeMillis();
+                Date datee = new Date(note.timestampend);
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat df3 = new SimpleDateFormat("MMM dd yyyy");
+                if(note.timestampend > 0) {
+                    timestampEnd.setText(df3.format(datee));
+                }
+                else {
+                    timestampEnd.setText("");
+                    //note.timestampend = Long.MAX_VALUE;
+                }
+                /*if(note.timestampend - currentDate < 25920000) {
+                    setBackGround();
+                }*/
+
+
             }
             catch (Exception e) {
+
                 e.printStackTrace();
             }
 
         }
+
+        @Override
+        public void onClick(View view) {
+
+        }
+    }
+    public interface OnNoteListener{
+        void onNoteClick();
     }
 }

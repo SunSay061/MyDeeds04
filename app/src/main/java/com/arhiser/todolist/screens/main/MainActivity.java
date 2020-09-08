@@ -32,11 +32,11 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Adapter.OnNoteListener {
 
     private RecyclerView recyclerView;
     private MenuInflater inflater;
-    Adapter adapter = new Adapter();
+    Adapter adapter = new Adapter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-        //final Adapter adapter = new Adapter();
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -71,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*@Override
+    public void callingBack() {
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.sort(App.getInstance().getNoteDao().getAll());
+    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         inflater = getMenuInflater();
@@ -81,10 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
-
         switch (item.getItemId()) {
 
             case R.id.deleteall:
@@ -131,5 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onNoteClick() {
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
+        /*try{
+            MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+            adapter.setItems(mainViewModel.sort(App.getInstance().getNoteDao().getAll()));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
     }
 }

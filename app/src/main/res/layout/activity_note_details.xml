@@ -57,4 +57,18 @@
         android:textColor="@color/txtDarkColor"
         android:layout_alignRight="@+id/itemCreateSpinner" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/text"
+        android:id="@+id/itemTimeEndAdd"
+        android:textSize="17sp"
+        android:layout_weight="20"
+        android:text="Дата окончания"
+        android:textColor="@color/txtDarkColor"
+        android:padding="10dp"
+        android:layout_alignLeft="@+id/text" />
+
 </RelativeLayout>

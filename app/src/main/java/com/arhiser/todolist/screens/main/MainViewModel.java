@@ -18,7 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Observer;
 
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel  {
     public LiveData<List<Note>> noteLiveData = App.getInstance().getNoteDao().getAllLiveData();
     //public List<Note> allNote = App.getInstance().getNoteDao().getAll();
     //public MutableLiveData<List<Note>> mutableLiveData = new MutableLiveData<>();
@@ -41,7 +41,7 @@ public class MainViewModel extends ViewModel {
                 if (!t1.done && note.done) {
                     return 1;
                 }
-                if (t1.done && !note.done) {
+                else if (t1.done && !note.done) {
                     return -1;
                 }
                 else if (!t1.group.equals(sortType) && note.group.equals(sortType)) {
@@ -57,9 +57,16 @@ public class MainViewModel extends ViewModel {
                     return (int) (note.timestamp - t1.timestamp);
                 }
                 else if (sortType.equals("Срочные")) {
-                    return (int) (t1.timestampend - note.timestampend);
+                    if(note.timestampend == 0){
+                        return 1;
+                    }
+                    else if(t1.timestampend == 0){
+                        return -1;
+                    }
+                    return (int) (note.timestampend - t1.timestampend);
                 }
-                return (int) (t1.timestamp - note.timestamp);
+                //return (int) (t1.timestamp - note.timestamp);
+                return 0;
             }
         });
         return notesList;

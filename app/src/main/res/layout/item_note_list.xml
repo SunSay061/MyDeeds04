@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/note_text"
         android:textSize="23dp"
-        android:layout_weight="55"
+        android:layout_weight="51"
         android:text="Some Note Title"
         android:textColor="@color/txtDarkColor"
         android:lines="1"
@@ -47,8 +47,7 @@
         android:id="@+id/noteStartDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="20
-"
+        android:layout_weight="22"
         android:padding="10dp"
         android:text="Dec 11 2017"
         android:textColor="@color/txtBrightColor"
@@ -59,8 +58,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/noteEndDate"
         android:textSize="17sp"
-        android:layout_weight="20"
-        android:text="Dec 1 2017"
+        android:layout_weight="22"
+        android:text="Aug 07 2017"
         android:textColor="@color/txtBrightColor"
         android:padding="10dp" />
 
