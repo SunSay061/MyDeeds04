@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        SunSay {
+            storeFile file('D:\\3d Work\\_Android\\KeyStore\\keys.jks')
+            storePassword 'Taran061160'
+            keyAlias 'key0'
+            keyPassword 'Taran061160'
+        }
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.arhiser.todolist"
